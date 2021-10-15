@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Dashboard</h1><br>
+<small>Welcome, {{request.user.username}}</small>
+<hr style = "background-color: white">
+<a href="/articles/add_article/" class = "btn btn-dark">Add Article</a>
+<br><br>
+{% if articles %}
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Created Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for article in articles %}
+        <tr>
+            <th scope="row">{{article.id}}</th>
+            <td><a href="{%url 'article:detail' article.id%}">{{article.title}}</a></td>
+            <td>{{article.created_date}}</td>
+            <td>
+                <a href="{%url 'article:update_article' article.id %}" class = "btn btn-dark">Edit</a>
+            </td>
+            <td>
+                <a href="{%url 'article:delete_article' article.id %}" class = "btn btn-dark">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="alert alert-warning" role="alert">
+  There is no article !
+</div>
+{% endif %}
+
+{% endblock body %}

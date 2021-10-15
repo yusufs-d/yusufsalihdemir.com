@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{%load static%}
+{% block body %}
+    <article>
+        <header class="mb-4">
+            <h1 class="fw-bolder mb-1">{{article.title}}</h1>
+            <div class="text-muted fst-italic mb-2">Posted on {{article.created_date}} by {{article.author}}</div>
+        </header>
+        {% if article.article_image %}
+            <figure class="mb-4"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt="..." /></figure>    
+        {% endif %}
+        
+        <section class="mb-5">
+            {{ article.content|safe }}
+        </section>
+    </article>
+
+ <section class="mb-5">
+                        <h4>Comments</h4>
+                        <hr style = "background-color: white"><br>
+                        <div class="card bg-dark">
+                            <div class="card-body">
+                                <form class="mb-4" method = "post" action = "{%url 'article:add_comment' article.id%}">
+                                {% csrf_token %}
+                                <textarea class="form-control" name = "comment_content" rows="3" placeholder="Join the discussion and leave a comment!"></textarea><br>
+                                <button type = "submit" class = "btn bnt-secondary">Add Comment</button>
+                                </form>
+
+                                {% if comments %}
+                                {% for comment in comments %}
+                                    <div class="d-flex">
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="{%static 'ico/fox.ico' %}" alt="..." /><br></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold"><b>{{comment.comment_author}}</b></div>
+                                        <small>{{comment.comment_date}} </small><br>
+                                        {{comment.comment_content}}
+                                    </div>
+                                </div>
+                                <br>
+                                {% endfor %} 
+                                {% else %}
+                                <div class = "alert alert-warning">There are no comments for this article yet.</div>
+                                {% endif %}
+                              
+                            </div>
+                            
+                            </div>
+                        </div>
+                    </section>
+                    
+{% endblock body %}
