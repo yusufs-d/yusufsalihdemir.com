@@ -3,3 +3,9 @@ django-ckeditor==6.1.0
 django-cleanup==5.2.0
 django-crispy-forms==1.12.0
 django-js-asset==1.2.2
+dj-database-url
+django-heroku
+gunicorn
+psycopg2
+python-decouple
+whitenoise
